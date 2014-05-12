@@ -1,3 +1,7 @@
+benchmul
+genmat
+
+
 # Object files
 *.o
 *.ko
