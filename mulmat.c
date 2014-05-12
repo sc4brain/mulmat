@@ -10,11 +10,25 @@ void mulMat_park(const int matsize,
 
 /***************** FUKUDA *******************/
 void mulMat_fukuda(const int matsize,
-	     const double *mata,
-	     const double *matb,
-	     double *matc)
+		   const double *mata,
+		   const double *matb,
+		   double *matc)
 {
-  ;
+  int i;
+  int counter_a=0,counter=0;
+  while(1){
+    for(i=0;i<matsize;i++){
+      matc[matsize*counter_a+counter] += mata[i+matsize*counter_a] * matb[i*matsize+counter];
+    }
+    counter++;
+    if(counter==matsize){
+      counter_a++;
+      counter=0;
+    }
+    if(counter_a==matsize){
+      break;
+    }
+  }
 }
 
 /***************** YAMAZAKI *******************/
