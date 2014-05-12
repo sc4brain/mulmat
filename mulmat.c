@@ -46,7 +46,15 @@ void mulMat_goto(const int matsize,
 	     const double *matb,
 	     double *matc)
 {
-  ;
+	int i, j, k;
+	for(i = 0; i < matsize; i++) {
+		for(j = 0; j < matsize; j++) {
+			matc[i*matsize + j] = 0;
+			for(k = 0; k < matsize; k++) {
+				matc[i*matsize + j] += mata[i*matsize + k] * matb[k*matsize + j];
+			}
+		}
+	}
 }
 
 /***************** KAZAWA *******************/
