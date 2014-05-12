@@ -1,6 +1,7 @@
 benchmul
 genmat
-
+*~
+*#
 
 # Object files
 *.o
