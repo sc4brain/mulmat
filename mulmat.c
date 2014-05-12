@@ -5,37 +5,21 @@ void mulMat_park(const int matsize,
 	     const double *matb,
 	     double *matc)
 {
-  //  int s = matsize;
   int i;
   int j;
-  //  double *answer=0;
-  int k;
+  int k=0;
   int size = matsize*matsize;
+
   for(i=0; i<size; i++){
     matc[i]=0;
-  }
-
-  /*  
-  for(i=0; i<(matsize*matsize); i++){
-    for(j=0; j<matsize; j++){
-      *(matc+i) = *(matc+i) + *(mata+ i - i%matsize + j) * *(matb + i % matsize + j*matsize);
-    }
-}
-  */
-  k=0;
-
-  for(i=0; i<size; i++){
     for(j=0; j<matsize; j++){
       matc[i] = matc[i] + mata[ i - k + j] * matb [k + j*matsize];
     }
     k++; 
-   if(k==matsize){
+    if(k==matsize){
       k = 0;
     }
   }
-
-  //  matc = answer;
-
 }
 /***************** FUKUDA *******************/
 void mulMat_fukuda(const int matsize,
