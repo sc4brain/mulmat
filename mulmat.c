@@ -69,7 +69,6 @@ void mulMat_yamazaki(const int matsize,
       bus = 0.0;
     }
   }
-
 }
 
 /***************** GOTO *******************/
@@ -83,7 +82,9 @@ void mulMat_goto(const int matsize,
 		for(j = 0; j < matsize; j++) {
 			matc[i*matsize + j] = 0;
 			for(k = 0; k < matsize; k++) {
+
 				matc[i*matsize + j] += mata[i*matsize + k] * matb[k*matsize + j];
+
 			}
 		}
 	}
@@ -105,6 +106,28 @@ void mulMat_miyamoto(const int matsize,
 	     const double *matb,
 	     double *matc)
 {
+#define BLOCK_SIZE 32
+  int i, j, k, ii, jj, kk;
+
+
+  for(ii=0; ii<matsize; ii+=BLOCK_SIZE){
+    for(kk=0; kk<matsize; kk+=BLOCK_SIZE){
+      for(jj=0; jj<matsize; jj+=BLOCK_SIZE){
+
+	for(i=ii; i<ii+BLOCK_SIZE && i < matsize; i++){
+	  for(k=kk; k<kk+BLOCK_SIZE && k < matsize; k++){
+	    for(j=jj; j<jj+BLOCK_SIZE && j < matsize; j++){
+	      matc[i*matsize+j] += mata[i*matsize+k] * matb[k*matsize+j];
+	    }
+	  }
+	}
+
+      }
+    }
+  }
+
+
+
   ;
 }
 
