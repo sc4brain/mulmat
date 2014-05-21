@@ -1,11 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <math.h>
 #include <string.h>
 #include "matfunc.h"
 
 #define ALLOW_ERROR 0.00001
+//#define GET_TIME_METHOD 1
+
+#ifdef GET_TIME_METHOD
+#include <time.h>
+
+double getTime()
+{
+  clock_t ct;
+  ct = clock();
+
+return((double)ct / CLOCKS_PER_SEC);
+}
+
+#else
+
+#include <sys/time.h>
+double getTime()
+{
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  return(tv.tv_sec + (double)tv.tv_usec*1e-6);
+
+}
+#endif
+
 
 double diffMat(const int matsize, const double *mata, const double *matb)
 {
@@ -27,18 +51,18 @@ double checkMulMatFunc(void (*func)(const int matsize, const double *mata, const
 		       const double *matb,
 		       const double *matc)
 {
-  clock_t start, end;
+  double start, end;
   double *tmp_matc;
   double calcerror;
   double time;
   tmp_matc = allocMat(matsize);
   clearMat(matsize, tmp_matc);
 
-  start = clock();
+  start = getTime();
   func(matsize, mata, matb, tmp_matc);
-  end = clock();
+  end = getTime();
 
-  time = (double)(end-start)/CLOCKS_PER_SEC;
+  time = end-start;
   printf("Time=%f sec , ", time);
 
   calcerror = diffMat(matsize, tmp_matc, matc);
