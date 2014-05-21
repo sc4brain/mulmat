@@ -1,7 +1,7 @@
 # Makefile
 
 CC	 	= gcc
-CFLAGS	 	= -O2 -Wall
+CFLAGS	 	= -O2 -Wall -fopenmp
 LDFLAGS		=
 INCLUDES 	= -I.
 LIBS 		= -lm
