@@ -2,7 +2,7 @@
 
 CC	 	= gcc
 CFLAGS	 	= -O2 -Wall -fopenmp
-LDFLAGS		=
+LDFLAGS		= -O2 -Wall -fopenmp
 INCLUDES 	= -I.
 LIBS 		= -lm
 GEN_OBJS	= matfunc.o genmat_main.o mulmat.o
