@@ -60,7 +60,23 @@ void mulMat_fukuda(const int matsize,
 		   const double *matb,
 		   double *matc)
 {
-  ;
+    
+  int i;
+  int counter_a=0,counter=0;
+  while(1){
+    for(i=0;i<matsize;i++){
+      matc[matsize*counter_a+counter] += mata[i+matsize*counter_a] * matb[i*matsize+counter];
+    }
+    counter++;
+    if(counter==matsize){
+      counter_a++;
+      counter=0;
+    }
+    if(counter_a==matsize){
+      break;
+    }
+  }
+  
 }
 
 /***************** YAMAZAKI *******************/
@@ -69,7 +85,26 @@ void mulMat_yamazaki(const int matsize,
 	     const double *matb,
 	     double *matc)
 {
-  ;  
+  
+  int i=0;
+  int row=0,col=0;
+  double bus=0.0;
+  int j=0,k=0;
+  
+
+  for(row=0;row<matsize;row++){
+    for(col=0;col<matsize;col++){
+      k=col;
+      for(j=row*matsize;j<(row+1)*matsize;j++){
+	bus += mata[j]*matb[k];
+	k+=matsize;
+      }
+      matc[i]=bus;
+      i++;
+      bus = 0.0;
+    }
+    }
+  
 }
 
 /***************** GOTO *******************/
@@ -104,28 +139,23 @@ void mulMat_kazawa(const int matsize,
 
 
 /***************** MIYAMOTO *******************/
-#ifdef BLOCK_SIZE
-#undef BLOCK_SIZE
-#endif
-#define BLOCK_SIZE 40
-
 void mulMat_miyamoto(const int matsize,
 	     const double *mata,
 	     const double *matb,
 	     double *matc)
 {
+#define BLOCK_SIZE 32
   int i, j, k, ii, jj, kk;
 
-#pragma omp parallel shared(mata, matb, matc) private(i, j, k, ii, jj, kk) num_threads(4)
+
   for(ii=0; ii<matsize; ii+=BLOCK_SIZE){
     for(kk=0; kk<matsize; kk+=BLOCK_SIZE){
       for(jj=0; jj<matsize; jj+=BLOCK_SIZE){
 
-#pragma omp for
-	for(i=0; i<BLOCK_SIZE; i++){
+	for(i=ii; i<ii+BLOCK_SIZE && i < matsize; i++){
 	  for(k=kk; k<kk+BLOCK_SIZE && k < matsize; k++){
 	    for(j=jj; j<jj+BLOCK_SIZE && j < matsize; j++){
-	      matc[(i+ii)*matsize+j] += mata[(i+ii)*matsize+k] * matb[k*matsize+j];
+	      matc[i*matsize+j] += mata[i*matsize+k] * matb[k*matsize+j];
 	    }
 	  }
 	}
@@ -133,6 +163,10 @@ void mulMat_miyamoto(const int matsize,
       }
     }
   }
+
+
+
+  ;
 }
 
 
