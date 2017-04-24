@@ -19,3 +19,14 @@ $ ./test100.sh
 $ ./test2000.sh
 ```
 
+ 
+# add your mulmat function
+- write your function to `mulmat.c` and `mulmat.h`
+```c
+ void mulMat_YOURNAME(const int matsize, const double *mata, const double *matb, double *matc);
+```
+- call your function from `benchmul_main.c`
+```c
+printf("YOUR NAME:\t");
+checkMulMatFunc(mulMat_YOURNAME, matsize, mata, matb, matc);
+```
