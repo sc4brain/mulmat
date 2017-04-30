@@ -63,6 +63,9 @@ int main(int argc, char **argv)
   printf("Miyamoto :\t");
   checkMulMatFunc(mulMat_miyamoto, matsize, mata, matb, matc);
 
+  printf("Inoue    :\t");
+  checkMulMatFunc(mulMat_inoue, matsize, mata, matb, matc);
+
   printf("\n****** FINISH BENCHMARK ******\n");
 
 

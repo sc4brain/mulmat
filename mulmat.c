@@ -169,4 +169,21 @@ void mulMat_miyamoto(const int matsize,
   ;
 }
 
+/***************** INOUE *******************/
+void mulMat_inoue(
+        const int matsize,
+        const double *mata,
+        const double *matb,
+        double *matc
+) {
+    int i, j, k;
+    #pragma omp parallel for schedule (static, matsize/4) num_threads(4)
+    for(i=0;i<matsize;i++) {
+        for(k=0;k<matsize;k++) {
+            for(j=0;j<matsize;j++) {
+                matc[i*matsize+j] += mata[i*matsize+k] * matb[k*matsize+j];
+            }
+        }
+    }
+}
 
