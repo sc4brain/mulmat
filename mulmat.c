@@ -177,11 +177,14 @@ void mulMat_inoue(
         double *matc
 ) {
     int i, j, k;
-    #pragma omp parallel for schedule (static, matsize/4) num_threads(4)
+    double tmp;
+    #pragma omp parallel for private(j, k, tmp) schedule (static)
     for(i=0;i<matsize;i++) {
-        for(k=0;k<matsize;k++) {
+   //     #pragma omp for schedule(static) private(k, tmp) nowait
+        for(k=0;k < matsize;k++) {
+            tmp = mata[i*matsize+k];
             for(j=0;j<matsize;j++) {
-                matc[i*matsize+j] += mata[i*matsize+k] * matb[k*matsize+j];
+                matc[i*matsize+j] += tmp * matb[k*matsize+j];
             }
         }
     }
