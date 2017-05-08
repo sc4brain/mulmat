@@ -19,7 +19,7 @@ $ ./test100.sh
 $ ./test2000.sh
 ```
 
-# add your mulmat function
+# Add your mulmat function
 - write your function to `mulmat.c` and `mulmat.h`
 ```c
  void mulMat_YOURNAME(const int matsize, const double *mata, const double *matb, double *matc);
@@ -30,3 +30,12 @@ $ ./test2000.sh
 printf("YOUR NAME:\t");
 checkMulMatFunc(mulMat_YOURNAME, matsize, mata, matb, matc);
 ```
+
+# Generate new data sets
+```
+$ ./genmat MATSIZE FILENAME1 FILENAME2 FILENAME3
+```
+- MATSIZE: size of matrix N
+- FILENAME1: matrix A
+- FILENAME2: matrix B
+- FILENAME3: matrix C
